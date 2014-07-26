@@ -21,8 +21,10 @@ class CheckExternalLinks extends BuildTask {
 				$href = Director::makeRelative($link->getAttribute('href'));
 				if ($href == 'admin/') continue;
 
-				// ignore SiteTree and assets links as they will be caught by SiteTreeLinkTracking
+				// ignore SiteTree and assets links and managed links as they will be caught by SiteTreeLinkTracking
 				if(preg_match('/\[sitetree_link,id=([0-9]+)\]/i', $href, $matches)) {
+					continue;
+				} else if(preg_match('/\[managed_link,id=([0-9]+)\]/i', $href, $matches)) {
 					continue;
 				} else if(substr($href, 0, strlen(ASSETS_DIR) + 1) == ASSETS_DIR.'/') {
 					continue;
